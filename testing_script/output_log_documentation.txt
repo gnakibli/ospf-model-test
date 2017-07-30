@@ -1,0 +1,9 @@
+The log file contains the LSDBs content before and after sending the message of the test.
+It also contains the content of the send LSAs.
+
+The log file may conain the following error messages, which indicate the following:
+
+* "number of LSAs is different" -- expected LSDB size doesn't match the actual one
+* "no matching link found" -- mismatch between an expected LSA's links and the actual one
+* "error in seq num check" -- mismatch between an expected LSA's sequence number and the actual one
+* "checkConsistentInitialState error " - mismatch at the initial state (before the message is sent) between an expected LSA's sequence number and the actual one

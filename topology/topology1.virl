@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.9" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.9/virl.xsd">
+    <extensions>
+        <entry key="management_network" type="String">exclusive</entry>
+        <entry key="AutoNetkit.enable_routing" type="Boolean">true</entry>
+    </extensions>
+    <node name="R0" type="SIMPLE" subtype="IOSv" location="490,117" ipv4="192.168.0.1">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.IGP" type="String">ospf</entry>
+            <entry key="AutoNetkit.ibgp_role" type="String">Disabled</entry>
+            <entry key="AutoNetkit.ospf_area" type="String">0</entry>
+            <entry key="AutoNetkit.custom_config_ospf" type="String">router-id 10.0.2.10</entry>
+            <entry key="static_serial_port_0" type="Integer">17000</entry>
+            <entry key="config" type="String">! IOS Config generated on 2016-12-15 15:01&#xD;
+! by autonetkit_0.21.4&#xD;
+!&#xD;
+hostname R0&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+!&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+!&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+no service config&#xD;
+enable password cisco&#xD;
+ip classless&#xD;
+ip subnet-zero&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+crypto key generate rsa modulus 768&#xD;
+ip ssh server algorithm authentication password&#xD;
+username cisco privilege 15 secret cisco&#xD;
+line vty 0 4&#xD;
+ transport input ssh telnet&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+!&#xD;
+no cdp run&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+  description Loopback&#xD;
+  ip address 192.168.0.1 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+  description OOB Management&#xD;
+  vrf forwarding Mgmt-intf&#xD;
+  ! Configured on launch&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+  description to R1&#xD;
+  ip address 10.0.2.10 255.255.255.0&#xD;
+  ip ospf network point-to-point&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/2&#xD;
+  description to flat-1&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/3&#xD;
+  description GigabitEthernet0/3&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+!&#xD;
+interface Tunnel1&#xD;
+  tunnel mode gre ip&#xD;
+  tunnel source GigabitEthernet0/2&#xD;
+  tunnel destination 172.16.1.254&#xD;
+  ip unnumbered GigabitEthernet0/2&#xD;
+&#xD;
+ip route 172.16.1.0 255.255.255.0 GigabitEthernet0/2&#xD;
+!&#xD;
+router ospf 1&#xD;
+  router-id 10.0.2.10&#xD;
+  log-adjacency-changes&#xD;
+  passive-interface Loopback0&#xD;
+  network 10.0.2.0 0.0.0.255 area 0.0.0.0&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+  network 192.168.0.1 mask 255.255.255.255&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+end&#xD;
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.13" netPrefixLenV4="30"/>
+        <interface id="1" name="GigabitEthernet0/2"/>
+        <interface id="2" name="GigabitEthernet0/3"/>
+    </node>
+    <node name="R1" type="SIMPLE" subtype="IOSv" location="492,207" ipv4="192.168.0.2">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.IGP" type="String">ospf</entry>
+            <entry key="AutoNetkit.ibgp_role" type="String">Disabled</entry>
+            <entry key="AutoNetkit.custom_config_ospf" type="String">router-id 10.0.2.1</entry>
+            <entry key="static_serial_port_0" type="Integer">17001</entry>
+            <entry key="config" type="String">! IOS Config generated on 2016-12-15 15:01&#xD;
+! by autonetkit_0.21.4&#xD;
+!&#xD;
+hostname R1&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+!&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+!&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+no service config&#xD;
+enable password cisco&#xD;
+ip classless&#xD;
+ip subnet-zero&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+crypto key generate rsa modulus 768&#xD;
+ip ssh server algorithm authentication password&#xD;
+username cisco privilege 15 secret cisco&#xD;
+line vty 0 4&#xD;
+ transport input ssh telnet&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+!&#xD;
+no cdp run&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+  description Loopback&#xD;
+  ip address 192.168.0.2 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+  description OOB Management&#xD;
+  vrf forwarding Mgmt-intf&#xD;
+  ! Configured on launch&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+  description to R0&#xD;
+  ip address 10.0.2.1 255.255.255.0&#xD;
+  ip ospf network point-to-point&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/2&#xD;
+  description to R2&#xD;
+  ip address 10.0.1.1 255.255.255.0&#xD;
+  ip ospf network point-to-point&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/3&#xD;
+  description to SW1&#xD;
+  ip address 10.0.0.1 255.255.255.0&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+router ospf 1&#xD;
+  router-id 10.0.2.1&#xD;
+  log-adjacency-changes&#xD;
+  passive-interface Loopback0&#xD;
+  network 10.0.0.0 0.0.0.255 area 0.0.0.0&#xD;
+  network 10.0.1.0 0.0.0.255 area 0.0.0.0&#xD;
+  network 10.0.2.0 0.0.0.255 area 0.0.0.0&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+  network 192.168.0.2 mask 255.255.255.255&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+end&#xD;
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.14" netPrefixLenV4="30"/>
+        <interface id="1" name="GigabitEthernet0/2" ipv4="10.0.128.1" netPrefixLenV4="30"/>
+        <interface id="2" name="GigabitEthernet0/3" ipv4="10.0.0.1" netPrefixLenV4="29"/>
+    </node>
+    <node name="R2" type="SIMPLE" subtype="IOSv" location="348,314" ipv4="192.168.0.3">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.IGP" type="String">ospf</entry>
+            <entry key="AutoNetkit.ibgp_role" type="String">Disabled</entry>
+            <entry key="AutoNetkit.custom_config_ospf" type="String">router-id 10.0.1.2</entry>
+            <entry key="static_serial_port_0" type="Integer">17002</entry>
+            <entry key="config" type="String">! IOS Config generated on 2016-12-15 15:01&#xD;
+! by autonetkit_0.21.4&#xD;
+!&#xD;
+hostname R2&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+!&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+!&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+no service config&#xD;
+enable password cisco&#xD;
+ip classless&#xD;
+ip subnet-zero&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+crypto key generate rsa modulus 768&#xD;
+ip ssh server algorithm authentication password&#xD;
+username cisco privilege 15 secret cisco&#xD;
+line vty 0 4&#xD;
+ transport input ssh telnet&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+!&#xD;
+no cdp run&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+  description Loopback&#xD;
+  ip address 192.168.0.3 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+  description OOB Management&#xD;
+  vrf forwarding Mgmt-intf&#xD;
+  ! Configured on launch&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+  description to R1&#xD;
+  ip address 10.0.1.2 255.255.255.0&#xD;
+  ip ospf network point-to-point&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+router ospf 1&#xD;
+  router-id 10.0.1.2&#xD;
+  log-adjacency-changes&#xD;
+  passive-interface Loopback0&#xD;
+  network 10.0.1.0 0.0.0.255 area 0.0.0.0&#xD;
+!&#xD;
+!&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+  network 192.168.0.3 mask 255.255.255.255&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+end&#xD;
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.128.2" netPrefixLenV4="30"/>
+    </node>
+    <node name="R3" type="SIMPLE" subtype="IOSv" location="655,332" ipv4="192.168.0.4">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.IGP" type="String">ospf</entry>
+            <entry key="AutoNetkit.ibgp_role" type="String">Disabled</entry>
+            <entry key="AutoNetkit.custom_config_ospf" type="String">router-id 10.0.0.3</entry>
+            <entry key="static_serial_port_0" type="Integer">17003</entry>
+            <entry key="config" type="String">! IOS Config generated on 2016-12-15 15:01&#xD;
+! by autonetkit_0.21.4&#xD;
+!&#xD;
+hostname R3&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+!&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+!&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+no service config&#xD;
+enable password cisco&#xD;
+ip classless&#xD;
+ip subnet-zero&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+crypto key generate rsa modulus 768&#xD;
+ip ssh server algorithm authentication password&#xD;
+username cisco privilege 15 secret cisco&#xD;
+line vty 0 4&#xD;
+ transport input ssh telnet&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+!&#xD;
+no cdp run&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+  description Loopback&#xD;
+  ip address 192.168.0.4 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+  description OOB Management&#xD;
+  vrf forwarding Mgmt-intf&#xD;
+  ! Configured on launch&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+  description to SW1&#xD;
+  ip address 10.0.0.3 255.255.255.0&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+router ospf 1&#xD;
+  router-id 10.0.0.3&#xD;
+  log-adjacency-changes&#xD;
+  passive-interface Loopback0&#xD;
+  network 10.0.0.0 0.0.0.255 area 0.0.0.0&#xD;
+!&#xD;
+!&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+  network 192.168.0.4 mask 255.255.255.255&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+end&#xD;
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.2" netPrefixLenV4="29"/>
+    </node>
+    <node name="R4" type="SIMPLE" subtype="IOSv" location="489,441" ipv4="192.168.0.5">
+        <extensions>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+            <entry key="AutoNetkit.IGP" type="String">ospf</entry>
+            <entry key="AutoNetkit.ibgp_role" type="String">Disabled</entry>
+            <entry key="AutoNetkit.custom_config_ospf" type="String">router-id 10.0.0.4</entry>
+            <entry key="static_serial_port_0" type="Integer">17004</entry>
+            <entry key="config" type="String">! IOS Config generated on 2016-12-15 15:01&#xD;
+! by autonetkit_0.21.4&#xD;
+!&#xD;
+hostname R4&#xD;
+boot-start-marker&#xD;
+boot-end-marker&#xD;
+!&#xD;
+vrf definition Mgmt-intf&#xD;
+!&#xD;
+ address-family ipv4&#xD;
+ exit-address-family&#xD;
+ !&#xD;
+ address-family ipv6&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+no aaa new-model&#xD;
+!&#xD;
+!&#xD;
+ip cef&#xD;
+ipv6 unicast-routing&#xD;
+ipv6 cef&#xD;
+!&#xD;
+!&#xD;
+service timestamps debug datetime msec&#xD;
+service timestamps log datetime msec&#xD;
+no service password-encryption&#xD;
+no service config&#xD;
+enable password cisco&#xD;
+ip classless&#xD;
+ip subnet-zero&#xD;
+no ip domain lookup&#xD;
+ip domain name virl.info&#xD;
+crypto key generate rsa modulus 768&#xD;
+ip ssh server algorithm authentication password&#xD;
+username cisco privilege 15 secret cisco&#xD;
+line vty 0 4&#xD;
+ transport input ssh telnet&#xD;
+ exec-timeout 720 0&#xD;
+ password cisco&#xD;
+ login local&#xD;
+line con 0&#xD;
+ password cisco&#xD;
+!&#xD;
+no cdp run&#xD;
+!&#xD;
+!&#xD;
+interface Loopback0&#xD;
+  description Loopback&#xD;
+  ip address 192.168.0.5 255.255.255.255&#xD;
+!&#xD;
+interface GigabitEthernet0/0&#xD;
+  description OOB Management&#xD;
+  vrf forwarding Mgmt-intf&#xD;
+  ! Configured on launch&#xD;
+  no ip address&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+interface GigabitEthernet0/1&#xD;
+  description to SW1&#xD;
+  ip address 10.0.0.4 255.255.255.0&#xD;
+  duplex full&#xD;
+  speed auto&#xD;
+  no shutdown&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+router ospf 1&#xD;
+  router-id 10.0.0.4&#xD;
+  log-adjacency-changes&#xD;
+  passive-interface Loopback0&#xD;
+  network 10.0.0.0 0.0.0.255 area 0.0.0.0&#xD;
+!&#xD;
+!&#xD;
+ !&#xD;
+ address-family ipv4&#xD;
+  network 192.168.0.5 mask 255.255.255.255&#xD;
+ exit-address-family&#xD;
+!&#xD;
+!&#xD;
+!&#xD;
+end&#xD;
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.3" netPrefixLenV4="29"/>
+    </node>
+    <node name="SW1" type="SIMPLE" subtype="Unmanaged Switch" location="488,339">
+        <interface id="0" name="link1"/>
+        <interface id="1" name="link2"/>
+        <interface id="2" name="link3"/>
+    </node>
+    <node name="flat-1" type="ASSET" subtype="FLAT" location="413,33">
+        <interface id="0" name="link0"/>
+    </node>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[3]/virl:interface[1]" src="/virl:topology/virl:node[2]/virl:interface[2]"/>
+    <connection dst="/virl:topology/virl:node[6]/virl:interface[1]" src="/virl:topology/virl:node[2]/virl:interface[3]"/>
+    <connection dst="/virl:topology/virl:node[6]/virl:interface[2]" src="/virl:topology/virl:node[4]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[6]/virl:interface[3]" src="/virl:topology/virl:node[5]/virl:interface[1]"/>
+    <connection dst="/virl:topology/virl:node[1]/virl:interface[2]" src="/virl:topology/virl:node[7]/virl:interface[1]"/>
+</topology>

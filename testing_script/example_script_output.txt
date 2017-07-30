@@ -1,0 +1,139 @@
+prompt> sudo python run_tests.py  2>&1 | tee outfile.txt
+Getting VIRL simulation ID
+topology-VUrx8L
+Getting VIRL extrenal IP address
+172.16.1.216
+172.16.1.215
+Initializing Telnet connections....
+1 0 3 2 4 tests/test0.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.sent msg
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+passed
+tests/test1.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.sent msg
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+passed
+tests/test2.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.sent msg
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+passed
+tests/test3.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+failed on initial comparison
+tests/test3.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.sent msg
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+passed
+tests/test4.txt
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.....Fetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+.sent msg
+fetch cisco LSDBFetch 1
+Fetch 0
+Fetch 3
+Fetch 2
+Fetch 4
+failed
